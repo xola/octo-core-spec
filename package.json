@@ -3,6 +3,6 @@
     "http-server": "^0.12.1"
   },
   "scripts": {
-    "start": "http-server ./docs -o"
+    "start": "http-server ./docs -o -c-1"
   }
 }
