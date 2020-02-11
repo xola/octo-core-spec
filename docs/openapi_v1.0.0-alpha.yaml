@@ -271,7 +271,7 @@ paths:
 
         This creates a new booking reservation.
 
-        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it MUST not fail on retry or create a duplicate reservation. The idempotency key is the UUID.
+        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it MUST not fail on retry or create a duplicate reservation. The idempotency key is the UUID. A supplier SHOULD verify that a retried request with the same UUID is matching the original reservation data, to avoid erroneous clients generating repeating UUIDs and response with the status 400 and ErrorCode 1005 in such case.
       operationId: 'createReservation'
       parameters:
         - $ref: '#/components/parameters/SupplierId'
