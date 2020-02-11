@@ -3,6 +3,7 @@
     "http-server": "^0.12.1"
   },
   "scripts": {
-    "start": "http-server ./docs -o -c-1"
+    "start": "http-server ./docs -o -c-1",
+    "start:w": "nodemon --watch 'docs' --ext 'yaml' --exec 'http-server ./docs -c-1'"
   }
 }
