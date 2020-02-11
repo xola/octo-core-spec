@@ -2,7 +2,7 @@
 
 This project includes an independently-developed API specification for facilitating communication between partners, SLA guidelines, as well as templates and validation tools for implementing the API.
 
-To run the documentation locally, clone the repository and run `npm start`.
+To run the documentation locally, clone the repository and run `npm start`. For a watch mode using nodemon, run `npm start:w`
 
 ## API Structure
 
