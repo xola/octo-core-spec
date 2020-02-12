@@ -298,9 +298,14 @@ paths:
       description: |
         **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
 
-        This expires the availability hold of an existing reservation so that the availablity is release for other booking reservations. This request is a courtesy, however Resellers SHOULD send this in order to ensure proper cleanup of any outstanding holds.
+        If the current status of the booking is `CONFIRMED`, this endpoint SHOULD process a cancellation.
 
-        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it MUST not fail on retry. The idempotency key is the UUID.
+        If the current status of the booking is `ON_HOLD`, this endpoint MUST expire the availability hold on the
+        booking so that the availability is released for other booking. This request is a courtesy, however Resellers
+        SHOULD send this in order to ensure proper cleanup of any outstanding holds.
+
+        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it
+        MUST not fail on retry. The idempotency key is the UUID.
       operationId: 'expireReservation'
       parameters:
         - $ref: '#/components/parameters/SupplierId'
@@ -862,11 +867,8 @@ components:
 
             Following are the only valid Cancellation flow status transitions:
 
-            * `CONFIRMED` -> `REJECTED`
-            * `CONFIRMED` -> `ON_HOLD` -> `EXPIRED`
-            * `CONFIRMED` -> `ON_HOLD` -> `CANCELLED`
-            * `CONFIRMED` -> `ON_HOLD` -> `PENDING` -> `REJECTED`
-            * `CONFIRMED` -> `ON_HOLD` -> `PENDING` -> `CANCELLED`
+            * `CONFIRMED` -> `CANCELLED`
+            * `ON_HOLD` -> `EXPIRED`
           example: 'ON_HOLD'
     Supplier:
       type: object
