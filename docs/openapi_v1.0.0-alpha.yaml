@@ -237,31 +237,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-
-  /suppliers/{supplierId}/bookings/{uuid}:
-    get:
-      tags:
-        - Bookings
-      summary: 'Get the booking details.'
-      description: |
-        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
-      operationId: 'getBookings'
-      parameters:
-        - $ref: '#/components/parameters/SupplierId'
-        - $ref: '#/components/parameters/Uuid'
-      responses:
-        '200':
-          $ref: '#/components/responses/BookingReservationResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
     post:
       tags:
         - Bookings
@@ -275,9 +250,33 @@ paths:
       operationId: 'createReservation'
       parameters:
         - $ref: '#/components/parameters/SupplierId'
-        - $ref: '#/components/parameters/Uuid'
       requestBody:
         $ref: '#/components/requestBodies/CreateReservationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/BookingReservationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /suppliers/{supplierId}/bookings/{uuid}:
+    get:
+      tags:
+        - Bookings
+      summary: 'Get the booking details.'
+      description: |
+        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
+      operationId: 'getBookings'
+      parameters:
+        - $ref: '#/components/parameters/SupplierId'
+        - $ref: '#/components/parameters/Uuid'
       responses:
         '200':
           $ref: '#/components/responses/BookingReservationResponse'
