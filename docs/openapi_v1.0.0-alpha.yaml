@@ -266,38 +266,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-    delete:
-      tags:
-        - Bookings
-      summary: 'Either cancel the booking, or expire the hold of an existing reservation.'
-      description: |
-        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
-
-        If the current status of the booking is `CONFIRMED`, this endpoint SHOULD process a cancellation.
-
-        If the current status of the booking is `ON_HOLD`, this endpoint MUST expire the availability hold on the
-        booking so that the availability is released for other booking. This request is a courtesy, however Resellers
-        SHOULD send this in order to ensure proper cleanup of any outstanding holds.
-
-        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it
-        MUST not fail on retry. The idempotency key is the UUID.
-      operationId: 'expireReservation'
-      parameters:
-        - $ref: '#/components/parameters/SupplierId'
-        - $ref: '#/components/parameters/Uuid'
-      responses:
-        '200':
-          $ref: '#/components/responses/BookingReservationResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
 
   /suppliers/{supplierId}/bookings/{uuid}/extend:
     post:
@@ -345,6 +313,35 @@ paths:
         - $ref: '#/components/parameters/Uuid'
       requestBody:
         $ref: '#/components/requestBodies/ConfirmReservationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/BookingReservationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  '/suppliers/{supplierId}/bookings/{uuid}/cancel':
+    post:
+      tags:
+        - Bookings
+      summary: 'Either cancel the booking, or expire the hold of an existing reservation.'
+      description: |
+        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
+
+        This expires the availability hold of an existing reservation so that the availablity is release for other booking reservations. This request is a courtesy, however Resellers SHOULD send this in order to ensure proper cleanup of any outstanding holds.
+
+        This call has to be idempotent. To be able to safely retry a call on any network error or timeout, therefore it MUST not fail on retry. The idempotency key is the UUID.
+      operationId: expireReservation
+      parameters:
+        - $ref: '#/components/parameters/SupplierId'
+        - $ref: '#/components/parameters/Uuid'
       responses:
         '200':
           $ref: '#/components/responses/BookingReservationResponse'
