@@ -427,6 +427,14 @@ components:
               description: |
                 Returns `null` when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
               example: 100
+    AvailabilityType:
+      type: string
+      description: |
+        This indicates whether the Product redemption is valid only for a specific start time (e.g. a guided tour) or valid any time during normal business hours.
+      enum:
+        - START_TIME
+        - OPENING_HOURS
+      example: 'START_TIME'
     Booking:
       type: object
       required:
@@ -679,13 +687,7 @@ components:
             This indicates whether the Reseller can expect immediate delivery of the customer's tickets. If `false` then the Reseller MUST be able to delay delivery of the tickets to the customer.
           example: true
         availabilityType:
-          type: string
-          description: |
-            This indicates whether the Product redemption is valid only for a specific start time (e.g. a guided tour) or valid any time during normal business hours.
-          enum:
-            - START_TIME
-            - OPENING_HOURS
-          example: 'START_TIME'
+          $ref: '#/components/schemas/AvailabilityType'
         deliveryFormats:
           type: array
           items:
