@@ -1,5 +1,4 @@
 openapi: 3.0.0
-# Added by API Auto Mocking Plugin
 info:
   description: |
     An open-source API for connecting Resellers and Booking Platforms.
@@ -1114,7 +1113,7 @@ components:
       name: optionIds
       in: query
       description: |
-        A list of valid option IDs that matches `id`s returned from `GET /suppliers/{supplierId}/products`. TODO: IS THIS REALLY CORRECT??
+        A list of valid option IDs that matches `id`s returned from `GET /suppliers/{supplierId}/products`.
       schema:
         type: array
         items:
@@ -1260,7 +1259,6 @@ components:
                 $ref: '#/components/schemas/ResellerReference'
               contact:
                 $ref: '#/components/schemas/Contact'
-
   securitySchemes:
     apiKey:
       type: apiKey
