@@ -980,20 +980,7 @@ components:
             This is an internal reference identifier that the Supplier wishes to use. It MAY be non-unique.
           example: 'LR1-01-new'
         type:
-          type: string
-          description: |
-            This is the base unit type for this unit definition. A value of `TRAVELLER` MUST only be used in replacement of `ADULT`, `CHILD`, `INFANT`, `YOUTH`, `STUDENT`, or `SENIOR`.
-          enum:
-            - ADULT
-            - CHILD
-            - INFANT
-            - YOUTH
-            - STUDENT
-            - SENIOR
-            - TRAVELLER
-            - RESOURCE
-            - OTHER
-          example: 'YOUTH'
+          $ref: '#/components/schemas/UnitType'
     UnitItem:
       type: object
       required:
@@ -1042,6 +1029,21 @@ components:
           description: |
             The total number of this unit that the customer wants to purchase.
           example: 2
+    UnitType:
+      type: string
+      description: |
+        This is the base unit type for this unit definition. A value of `TRAVELLER` MUST only be used in replacement of `ADULT`, `CHILD`, `INFANT`, `YOUTH`, `STUDENT`, or `SENIOR`.
+      enum:
+        - ADULT
+        - CHILD
+        - INFANT
+        - YOUTH
+        - STUDENT
+        - SENIOR
+        - TRAVELLER
+        - RESOURCE
+        - OTHER
+      example: 'YOUTH'
     Uuid:
       type: string
       format: uuid
