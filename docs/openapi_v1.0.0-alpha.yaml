@@ -632,6 +632,19 @@ components:
           description: |
             Represents the value for the voucher or ticket that should be used. If the `deliveryFormat` is `PDF_URL` then this value MUST be a valid [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) that resolves to a `PDF` resource. For any other `deliveryFormat` this value MUST be encoded according to the `deliveryFormat` value.
           example: '01234567890'
+    ExtendReason:
+      type: string
+      enum:
+        - FRAUD_CHECK
+        - CUSTOMER_REQUESTED
+        - OTHER
+      description: |
+        This indicates the reason for extending the booking hold.
+
+        * `FRAUD_CHECK` is the most common scenario where additional time is required to ensure that the booking is not being made using fraudulent payment information.
+        * `CUSTOMER_REQUESTED` is intended for scenarios where the customer is actively completing the checkout process but requires some additional time to complete. The Reseller SHOULD try to ensure that customers may only extend their booking once.
+        * `OTHER` can be used in other unusual circumstances but SHOULD not be abused to maintain a hold without good reason. If this value is specified the Reseller SHOULD provide `reasonDetails` to explain the justification.
+      example: 'FRAUD_CHECK'
     Locale:
       type: string
       description: |
@@ -1223,18 +1236,7 @@ components:
               - holdExpirationMinutes
             properties:
               reason:
-                type: string
-                enum:
-                  - FRAUD_CHECK
-                  - CUSTOMER_REQUESTED
-                  - OTHER
-                description: |
-                  This indicates the reason for extending the booking hold.
-
-                  * `FRAUD_CHECK` is the most common scenario where additional time is required to ensure that the booking is not being made using fraudulent payment information.
-                  * `CUSTOMER_REQUESTED` is intended for scenarios where the customer is actively completing the checkout process but requires some additional time to complete. The Reseller SHOULD try to ensure that customers may only extend their booking once.
-                  * `OTHER` can be used in other unusual circumstances but SHOULD not be abused to maintain a hold without good reason. If this value is specified the Reseller SHOULD provide `reasonDetails` to explain the justification.
-                example: 'FRAUD_CHECK'
+                $ref: '#/components/schemas/ExtendReason'
               reasonDetails:
                 type: string
                 nullable: true
