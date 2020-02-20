@@ -11,6 +11,6 @@ If you would like to propose a change or addition, please fork the repository an
 To contribute to documentation, you can directly modify the corresponding .md files in the docs directory. Please submit a pull request. Once your PR is merged, the documentation is automatically built and made publicly available.
 
 ### License
-By contributing to `icf`, you agree that your contributions will be licensed under its Apache License.
+By contributing to `octospec`, you agree that your contributions will be licensed under its Apache License.
 
-[icf documentation]: https://github.com/ExpediaGroup/icf
+[OCTo documentation]: https://github.com/octospec
