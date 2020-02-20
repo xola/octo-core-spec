@@ -75,36 +75,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /suppliers/{supplierId}/availability/calendar:
-    get:
-      tags:
-        - Availability
-      summary: Get a list of dates on which tickets are available
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CalendarItem'
-      operationId: getCalendar
-      parameters:
-        - $ref: '#/components/parameters/LocalDateStart'
-        - $ref: '#/components/parameters/LocalDateEnd'
-        - $ref: '#/components/parameters/ProductId'
-        - $ref: '#/components/parameters/SupplierId'
-        - $ref: '#/components/parameters/OptionIds'
-      description: |-
-        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
-
-        Returns a list of dates on which tickets are available.
-        Only dates that have availability SHALL BE returned.
-        A minimum range of 31 days MUST BE supported.
-
-        This endpoint proved a relatively lightweight way to show a calendar in a user interface containing a one month calendar with the days where there is no availability greyed out.
-
   /suppliers/{supplierId}/availability:
     get:
       tags:
@@ -208,6 +178,34 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
+  /suppliers/{supplierId}/availability/calendar:
+    get:
+      tags:
+        - Availability
+      summary: 'Get a list of dates on which tickets are available'
+      description: |
+        **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
+
+        Returns a list of dates (no times) and the number of vacancies. The response MUST only include dates that have vacancies and a minimum range of 31 days MUST be supported.
+
+        This endpoint is intended to support a lightweight way to show a calendar in a user interface containing a one month view with the days where there is no availability greyed out.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AvailabilityCalendarItem'
+      operationId: getCalendar
+      parameters:
+        - $ref: '#/components/parameters/LocalDateStart'
+        - $ref: '#/components/parameters/LocalDateEnd'
+        - $ref: '#/components/parameters/ProductId'
+        - $ref: '#/components/parameters/SupplierId'
+        - $ref: '#/components/parameters/OptionIds'
 
   /suppliers/{supplierId}/bookings:
     post:
@@ -381,6 +379,21 @@ components:
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time.
           format: date-time
           example: '2019-10-31T10:00:00Z'
+    AvailabilityCalendarItem:
+      title: CalendarItem
+      type: object
+      properties:
+        localDate:
+          type: string
+          format: date
+        capacity:
+          type: integer
+          minimum: 0
+    AvailabilityId:
+      type: string
+      description: |
+        A valid availability ID that matches the `id` returned from `GET /availability`.
+      example: '28271273-a317-40fc-8f42-79725a7072a3'
     AvailabilityStatus:
       allOf:
         - $ref: '#/components/schemas/Availability'
@@ -412,11 +425,6 @@ components:
               description: |
                 Returns `null` when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
               example: 100
-    AvailabilityId:
-      type: string
-      description: |
-        A valid availability ID that matches the `id` returned from `GET /availability`.
-      example: '28271273-a317-40fc-8f42-79725a7072a3'
     Booking:
       type: object
       required:
@@ -1021,16 +1029,6 @@ components:
       description: |
         This UUID is generated for the initial `createBooking` request and MUST never change. This value MUST be tracked by both the Reseller and Booking Platform for locating this record.
       example: '7df49d62-57ad-44be-8373-e4c2fe7e63fe'
-    CalendarItem:
-      title: CalendarItem
-      type: object
-      properties:
-        localDate:
-          type: string
-          format: date
-        capacity:
-          type: integer
-          minimum: 0
   responses:
     BadRequest:
       description: |
