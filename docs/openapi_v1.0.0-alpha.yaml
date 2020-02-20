@@ -526,7 +526,7 @@ components:
         id:
           type: string
           description: |
-            This MUST be a unique identifier within the scope of the ICF. Officially adopted capabilities will be identified only by the name of the capability but any capabilities that are specific to a particular partner MUST be prefixed with that partner's identifier and separated from the capability name with a `/`.
+            This MUST be a unique identifier within the scope of the OCTo specification. Officially adopted capabilities will be identified only by the name of the capability but any capabilities that are specific to a particular partner MUST be prefixed with that partner's identifier and separated from the capability name with a `/`.
           example: 'api.my-booking-platform.com/dynamic-pricing'
         revision:
           type: integer
