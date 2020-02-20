@@ -491,18 +491,7 @@ components:
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at whcih the VOUCHER was delivered.
           example: '2019-10-31T08:30:00Z'
         refreshFrequency:
-          type: string
-          enum:
-            - HOURLY
-            - DAILY
-          description: |
-            This is the RECOMMENDED refresh interval for the Reseller and SHOULD be used by the Reseller to control the frequency at which they make a `getBooking` request for the following scenarios:
-
-            * To see if a booking has changed out of a `PENDING` status into `CONFIRMED` or `REJECTED`.
-            * To see if a booking has had any new Vouchers or Tickets delivered for the booking.
-            * To see if a booking has changed from `CONFIRMED` to `CANCELLED` in the event of a supplier-initiated cancellation.
-            * To see if a booking has an updated `utcRedeemedAt`/`utcResolvedAt` value for the Voucher or any of the Tickets.
-          example: 'HOURLY'
+          $ref: '#/components/schemas/RefreshFrequency'
         productId:
           type: string
           description: |
@@ -829,6 +818,19 @@ components:
         - DIGITAL
         - PRINT
       example: 'DIGITAL'
+    RefreshFrequency:
+      type: string
+      enum:
+        - HOURLY
+        - DAILY
+      description: |
+        This is the RECOMMENDED refresh interval for the Reseller and SHOULD be used by the Reseller to control the frequency at which they make a `getBooking` request for the following scenarios:
+
+        * To see if a booking has changed out of a `PENDING` status into `CONFIRMED` or `REJECTED`.
+        * To see if a booking has had any new Vouchers or Tickets delivered for the booking.
+        * To see if a booking has changed from `CONFIRMED` to `CANCELLED` in the event of a supplier-initiated cancellation.
+        * To see if a booking has an updated `utcRedeemedAt`/`utcResolvedAt` value for the Voucher or any of the Tickets.
+      example: 'HOURLY'
     ResellerReference:
       type: string
       nullable: true
