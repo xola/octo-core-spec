@@ -20,7 +20,7 @@ paths:
       summary: 'Returns a list of suppliers and associated contact details.'
       description: |
         This list MAY be limited based on the suppliers that the authenticated user has been granted access to.
-      operationId: 'getSuppliers'
+      operationId: 'suppliers'
       responses:
         '200':
           description: |
@@ -51,7 +51,7 @@ paths:
         **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
 
         Contains all product details necessary to ingest, map, and sell.
-      operationId: 'getProducts'
+      operationId: 'products'
       parameters:
         - $ref: '#/components/parameters/SupplierId'
       responses:
@@ -199,7 +199,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AvailabilityCalendarItem'
-      operationId: getCalendar
+      operationId: 'availabilityCalendar'
       parameters:
         - $ref: '#/components/parameters/LocalDateStart'
         - $ref: '#/components/parameters/LocalDateEnd'
@@ -246,7 +246,7 @@ paths:
         **WARNING: this endpoint may live under a different domain, path or both depending on the supplier endpoint URL returned by the GET /suppliers.**
 
         This returns the current state of any valid booking. This request MAY be made at any point after the initial `createBooking` request is processed successfully and it MUST return the booking object.
-      operationId: 'getBooking'
+      operationId: 'booking'
       parameters:
         - $ref: '#/components/parameters/SupplierId'
         - $ref: '#/components/parameters/Uuid'
