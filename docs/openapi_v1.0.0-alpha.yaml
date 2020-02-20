@@ -627,42 +627,6 @@ components:
       description: |
         This MUST be a valid [BCP 47](https://tools.ietf.org/html/bcp47) [RFC 5646](https://tools.ietf.org/html/rfc5646) [RFC 4647](https://tools.ietf.org/html/rfc4647) language tag.
       example: 'en-GB'
-    Option:
-      type: object
-      required:
-        - id
-        - internalName
-        - units
-      properties:
-        id:
-          type: string
-          description: |
-            This MUST be a unique identifier within the scope of the Product.
-          example: '0001'
-        internalName:
-          type: string
-          description: |
-            This SHOULD be a friendly name for the Option to facilitate easier identification. It MUST NOT be shown to the customer.
-          example: 'Morning'
-        reference:
-          type: string
-          description: |
-            This is an internal reference identifier that the Supplier wishes to use. It MAY be non-unique.
-          example: 'LR1-01'
-        units:
-          type: array
-          items:
-            $ref: '#/components/schemas/Unit'
-          minItems: 1
-          example:
-            - id: 'adult'
-              internalName: 'Adult'
-              reference: 'LR1-01-01'
-              type: 'ADULT'
-            - id: '0001-0001-child'
-              internalName: 'Child'
-              reference: 'LR1-01-02'
-              type: 'CHILD'
     Product:
       type: object
       required:
@@ -755,7 +719,7 @@ components:
         options:
           type: array
           items:
-            $ref: '#/components/schemas/Option'
+            $ref: '#/components/schemas/ProductOption'
           minItems: 1
           example:
             - id: '0001'
@@ -782,6 +746,42 @@ components:
                   internalName: 'Child'
                   reference: 'LR1-01-02'
                   type: 'CHILD'
+    ProductOption:
+      type: object
+      required:
+        - id
+        - internalName
+        - units
+      properties:
+        id:
+          type: string
+          description: |
+            This MUST be a unique identifier within the scope of the Product.
+          example: '0001'
+        internalName:
+          type: string
+          description: |
+            This SHOULD be a friendly name for the Option to facilitate easier identification. It MUST NOT be shown to the customer.
+          example: 'Morning'
+        reference:
+          type: string
+          description: |
+            This is an internal reference identifier that the Supplier wishes to use. It MAY be non-unique.
+          example: 'LR1-01'
+        units:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unit'
+          minItems: 1
+          example:
+            - id: 'adult'
+              internalName: 'Adult'
+              reference: 'LR1-01-01'
+              type: 'ADULT'
+            - id: '0001-0001-child'
+              internalName: 'Child'
+              reference: 'LR1-01-02'
+              type: 'CHILD'
     Reason:
       type: string
       enum:
