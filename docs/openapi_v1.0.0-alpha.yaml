@@ -389,6 +389,23 @@ components:
         capacity:
           type: integer
           minimum: 0
+    AvailabilityDateStatus:
+      type: string
+      description: |
+        This represents whether the availability in this configuration is currently bookable. The values have the following meanings:
+
+        * `FREESALE`: Always available.
+        * `AVAILABLE`: Currently available for sale, but has a fixed capacity.
+        * `LIMITED`: Currently available for sale, but has a fixed capacity and may be sold out soon.
+        * `SOLD_OUT`: Currently sold out, but additional availability may free up.
+        * `CLOSED`: Currently not available for sale, but not sold out (e.g. temporarily on stop-sell) and may be available for sale soon.
+      enum:
+        - FREESALE
+        - AVAILABLE
+        - LIMITED
+        - SOLD_OUT
+        - CLOSED
+      example: 'AVAILABLE'
     AvailabilityId:
       type: string
       description: |
@@ -403,22 +420,7 @@ components:
             - vacancies
           properties:
             status:
-              type: string
-              description: |
-                This represents whether the availability in this configuration is currently bookable. The values have the following meanings:
-
-                * `FREESALE`: Always available.
-                * `AVAILABLE`: Currently available for sale, but has a fixed capacity.
-                * `LIMITED`: Currently available for sale, but has a fixed capacity and may be sold out soon.
-                * `SOLD_OUT`: Currently sold out, but additional availability may free up.
-                * `CLOSED`: Currently not available for sale, but not sold out (e.g. temporarily on stop-sell) and may be available for sale soon.
-              enum:
-                - FREESALE
-                - AVAILABLE
-                - LIMITED
-                - SOLD_OUT
-                - CLOSED
-              example: 'AVAILABLE'
+              $ref: '#/components/schemas/AvailabilityDateStatus'
             vacancies:
               type: integer
               nullable: true
