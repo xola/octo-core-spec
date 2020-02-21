@@ -673,6 +673,9 @@ components:
       example: 'VOUCHER'
     DeliveryOption:
       type: object
+      required:
+        - deliveryFormat
+        - deliveryValue
       properties:
         deliveryFormat:
           $ref: '#/components/schemas/DeliveryFormat'
