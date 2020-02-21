@@ -1230,6 +1230,7 @@ components:
             properties:
               resellerReference:
                 type: string
+                description: |
                   An OPTIONAL tracking reference for the Reseller that SHOULD be tracked by the Booking Platform. This MUST be returned if the value was provided in the request body.
                 example: '001-002'
               contact:
