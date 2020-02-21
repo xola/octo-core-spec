@@ -393,12 +393,20 @@ components:
           example: '2019-10-31T10:00:00Z'
     AvailabilityCalendarItem:
       type: object
+      required:
+        - localDate
       properties:
         localDate:
           type: string
+          description: |
+            This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date.
           format: date
-        capacity:
+          example: '2019-10-31'
+        vacancies:
           type: integer
+          description: |
+            This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
+          example: 100
           minimum: 0
     AvailabilityDateStatus:
       type: string
@@ -431,6 +439,7 @@ components:
               description: |
                 This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
               example: 100
+              minimum: 0
     AvailabilityType:
       type: string
       description: |
