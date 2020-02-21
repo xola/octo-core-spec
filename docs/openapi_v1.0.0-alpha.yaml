@@ -412,15 +412,13 @@ components:
         - type: object
           required:
             - status
-            - vacancies
           properties:
             status:
               $ref: '#/components/schemas/AvailabilityDateStatus'
             vacancies:
               type: integer
-              nullable: true
               description: |
-                Returns `null` when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
+                This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
               example: 100
     AvailabilityType:
       type: string
@@ -436,15 +434,11 @@ components:
         - uuid
         - status
         - cancellable
-        - utcHoldExpiration
-        - utcConfirmedAt
-        - utcDeliveredAt
         - productId
         - optionId
         - availability
         - contact
         - deliveryMethods
-        - voucher
         - unitItems
       properties:
         uuid:
@@ -455,13 +449,11 @@ components:
           example: 'f149068e-300e-452a-a856-3f091239f1d7'
         resellerReference:
           type: string
-          nullable: true
           description: |
             An OPTIONAL tracking reference for the Reseller that SHOULD be tracked by the Booking Platform. This MUST be returned if the value was provided in the request body.
           example: '001-002'
         supplierReference:
           type: string
-          nullable: true
           description: |
             An OPTIONAL tracking reference for the Supplier that SHOULD be tracked by the Reseller.
           example: 'ABC-123'
@@ -475,21 +467,18 @@ components:
         utcHoldExpiration:
           type: string
           format: date-time
-          nullable: true
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the availability hold will be released. This SHOULD be equivalent to the time calculated by adding `holdExpirationMinutes` to the current UTC time but MAY be either earlier or later than the requested duration.
           example: '2019-10-31T08:30:00Z'
         utcConfirmedAt:
           type: string
           format: date-time
-          nullable: true
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the booking was confirmed (either automatically by the Booking Platform or manually by the Supplier).
           example: '2019-10-31T08:30:00Z'
         utcDeliveredAt:
           type: string
           format: date-time
-          nullable: true
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at whcih the VOUCHER was delivered.
           example: '2019-10-31T08:30:00Z'
@@ -516,10 +505,7 @@ components:
           minItems: 1
           maxItems: 2
         voucher:
-          # https://github.com/OAI/OpenAPI-Specification/issues/1368
-          nullable: true
-          allOf:
-            - $ref: '#/components/schemas/Ticket'
+          $ref: '#/components/schemas/Ticket'
         unitItems:
           type: array
           items:
@@ -552,9 +538,7 @@ components:
       required:
         - fullName
         - emailAddress
-        - phoneNumber
         - locales
-        - country
       properties:
         fullName:
           type: string
@@ -569,7 +553,6 @@ components:
           example: 'traveller@fake.com'
         phoneNumber:
           type: string
-          nullable: true
           description: |
             The contact phone number of the lead traveller.
           example: '+1 555-555-1212'
@@ -587,7 +570,6 @@ components:
           minItems: 0
         country:
           type: string
-          nullable: true
           description: |
             This MUST be a valid [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code.
           example: 'GB'
@@ -612,18 +594,11 @@ components:
       example: 'VOUCHER'
     DeliveryOption:
       type: object
-      required:
-        - deliveryFormat
-        - deliveryValue
       properties:
         deliveryFormat:
-          # https://github.com/OAI/OpenAPI-Specification/issues/1368
-          nullable: true
-          allOf:
-            - $ref: '#/components/schemas/DeliveryFormat'
+          $ref: '#/components/schemas/DeliveryFormat'
         deliveryValue:
           type: string
-          nullable: true
           description: |
             Represents the value for the voucher or ticket that should be used. If the `deliveryFormat` is `PDF_URL` then this value MUST be a valid [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) that resolves to a `PDF` resource. For any other `deliveryFormat` this value MUST be encoded according to the `deliveryFormat` value.
           example: '01234567890'
@@ -809,7 +784,6 @@ components:
       example: 'CUSTOMER_REQUESTED'
     ReasonDetails:
       type: string
-      nullable: true
       description: |
         This field provides additional details about the reason for the cancellation request. It may include information from the customer, supplier, or support agent about the reason for the cancellation (especially in the case of requesting a cancellation outside of the normal policy which may require manual approval from the supplier).
       example: 'Child came down with the flu the day before the activity.'
@@ -926,8 +900,6 @@ components:
       required:
         - deliveryOptions
         - redemptionMethod
-        - utcDeliveredAt
-        - utcRedeemedAt
       properties:
         deliveryOptions:
           type: array
@@ -938,14 +910,12 @@ components:
         utcDeliveredAt:
           type: string
           format: date-time
-          nullable: true
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the voucher was made available to the customer by the Supplier. This will typically be the same as `utcConfirmedAt`.
           example: '2019-10-31T08:30:00Z'
         utcRedeemedAt:
           type: string
           format: date-time
-          nullable: true
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the customer redeemed this voucher.
           example: '2019-10-31T08:30:00Z'
@@ -991,7 +961,6 @@ components:
           example: 'adult'
         resellerReference:
           type: string
-          nullable: true
           description: |
             An OPTIONAL tracking reference for the Reseller that SHOULD be tracked by the Booking Platform. This MUST be returned if the value was provided in the request body.
           example: '001-002'
@@ -999,20 +968,14 @@ components:
       allOf:
         - $ref: '#/components/schemas/UnitItem'
         - type: object
-          required:
-            - ticket
           properties:
             supplierReference:
               type: string
-              nullable: true
               description: |
                 An OPTIONAL tracking reference for the Supplier that SHOULD be tracked by the Reseller.
               example: 'ABC-123'
             ticket:
-              # https://github.com/OAI/OpenAPI-Specification/issues/1368
-              nullable: true
-              allOf:
-                - $ref: '#/components/schemas/Ticket'
+              $ref: '#/components/schemas/Ticket'
     UnitQuantity:
       type: object
       required:
@@ -1202,7 +1165,6 @@ components:
                 example: '7df49d62-57ad-44be-8373-e4c2fe7e63fe'
               resellerReference:
                 type: string
-                nullable: true
                 description: |
                   An OPTIONAL tracking reference for the Reseller that SHOULD be tracked by the Booking Platform. This MUST be returned if the value was provided in the request body.
                 example: '001-002'
@@ -1241,14 +1203,12 @@ components:
             type: object
             required:
               - reason
-              - reasonDetails
               - holdExpirationMinutes
             properties:
               reason:
                 $ref: '#/components/schemas/ExtendReason'
               reasonDetails:
                 type: string
-                nullable: true
                 description: |
                   This provides additional details behind the reason for requesting the extension and SHOULD be provided in all cases, but especially if the `reason` given is `OTHER`.
                 example: 'Manual fraud review with 2-hour SLA.'
@@ -1270,8 +1230,6 @@ components:
             properties:
               resellerReference:
                 type: string
-                nullable: true
-                description: |
                   An OPTIONAL tracking reference for the Reseller that SHOULD be tracked by the Booking Platform. This MUST be returned if the value was provided in the request body.
                 example: '001-002'
               contact:
