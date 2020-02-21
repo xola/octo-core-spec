@@ -192,11 +192,11 @@ paths:
         This endpoint is intended to support a lightweight way to show a calendar in a user interface containing a one month view with the days where there is no availability greyed out.
       operationId: 'availabilityCalendar'
       parameters:
+        - $ref: '#/components/parameters/SupplierId'
+        - $ref: '#/components/parameters/ProductId'
+        - $ref: '#/components/parameters/OptionId'
         - $ref: '#/components/parameters/LocalDateStart'
         - $ref: '#/components/parameters/LocalDateEnd'
-        - $ref: '#/components/parameters/ProductId'
-        - $ref: '#/components/parameters/SupplierId'
-        - $ref: '#/components/parameters/OptionId'
       responses:
         '200':
           description: OK
