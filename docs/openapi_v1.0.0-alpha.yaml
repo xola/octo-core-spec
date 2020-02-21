@@ -1,4 +1,5 @@
 openapi: 3.0.0
+
 info:
   description: |
     An open-source API for connecting Resellers and Booking Platforms.
@@ -9,9 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-externalDocs:
-  description: OCTo Home
-  url: http://octospec.com/
+
 paths:
   /suppliers:
     get:
@@ -1325,8 +1324,16 @@ components:
       type: apiKey
       name: Authorization
       in: header
+
+security:
+  - apiKey: []
+
 tags:
   - name: Suppliers
   - name: Products
   - name: Availability
   - name: Bookings
+
+externalDocs:
+  description: OCTo Home
+  url: http://octospec.com/
