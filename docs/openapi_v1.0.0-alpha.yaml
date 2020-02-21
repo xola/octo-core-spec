@@ -112,7 +112,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AvailabilityStatus'
+                  $ref: '#/components/schemas/AvailabilityItem'
                 example:
                   - id: '28271273-a317-40fc-8f42-79725a7072a3'
                     localDateTimeStart: '2019-10-31T08:30:00Z'
@@ -156,7 +156,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AvailabilityStatus'
+                  $ref: '#/components/schemas/AvailabilityItem'
                 example:
                   - id: '28271273-a317-40fc-8f42-79725a7072a3'
                     localDateTimeStart: '2019-10-31T08:30:00Z'
@@ -408,7 +408,7 @@ components:
             This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
           example: 100
           minimum: 0
-    AvailabilityDateStatus:
+    AvailabilityStatus:
       type: string
       description: |
         This represents whether the availability in this configuration is currently bookable. The values have the following meanings:
@@ -425,7 +425,7 @@ components:
         - SOLD_OUT
         - CLOSED
       example: 'AVAILABLE'
-    AvailabilityStatus:
+    AvailabilityItem:
       allOf:
         - $ref: '#/components/schemas/Availability'
         - type: object
@@ -433,7 +433,7 @@ components:
             - status
           properties:
             status:
-              $ref: '#/components/schemas/AvailabilityDateStatus'
+              $ref: '#/components/schemas/AvailabilityStatus'
             vacancies:
               type: integer
               description: |
