@@ -395,6 +395,7 @@ components:
       type: object
       required:
         - localDate
+        - status
       properties:
         localDate:
           type: string
@@ -402,12 +403,29 @@ components:
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date.
           format: date
           example: '2019-10-31'
+        status:
+          $ref: '#/components/schemas/AvailabilityStatus'
         vacancies:
           type: integer
           description: |
             This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
           example: 100
           minimum: 0
+    AvailabilityItem:
+      allOf:
+        - $ref: '#/components/schemas/Availability'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              $ref: '#/components/schemas/AvailabilityStatus'
+            vacancies:
+              type: integer
+              description: |
+                This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
+              example: 100
+              minimum: 0
     AvailabilityStatus:
       type: string
       description: |
@@ -425,21 +443,6 @@ components:
         - SOLD_OUT
         - CLOSED
       example: 'AVAILABLE'
-    AvailabilityItem:
-      allOf:
-        - $ref: '#/components/schemas/Availability'
-        - type: object
-          required:
-            - status
-          properties:
-            status:
-              $ref: '#/components/schemas/AvailabilityStatus'
-            vacancies:
-              type: integer
-              description: |
-                This SHOULD NOT be returned when `status` is `FREESALE`. This SHOULD be a shared pool for all Unit types in the Option. If availability is tracked per-Unit then this value MUST be equal to the available quantity for the Unit that has the most remaining.
-              example: 100
-              minimum: 0
     AvailabilityType:
       type: string
       description: |
