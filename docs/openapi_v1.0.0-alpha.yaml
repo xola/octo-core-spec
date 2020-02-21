@@ -522,7 +522,6 @@ components:
         - status
         - refund
         - utcRequestedAt
-        - utcHoldExpiration
         - utcConfirmedAt
         - utcResolvedAt
       properties:
@@ -542,13 +541,6 @@ components:
           format: date-time
           description: |
             This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the cancellation request was originally started. This timestamp MUST be used for any validation against a cancellation policy. This is important because there may be some delay in confirming this cancellation request during the 2-phase workflow which could finish just after the cancellation policy cutoff has elapsed.
-          example: '2019-10-31T08:30:00Z'
-        utcHoldExpiration:
-          type: string
-          format: date-time
-          nullable: true
-          description: |
-            This MUST be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant date and time. The value represents the time at which the cancellation request hold will be released. This SHOULD be equivalent to the time calculated by adding `holdExpirationMinutes` to the current UTC time but MAY be either earlier or later than the requested duration.
           example: '2019-10-31T08:30:00Z'
         utcConfirmedAt:
           type: string
