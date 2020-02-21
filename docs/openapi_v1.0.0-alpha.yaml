@@ -380,7 +380,6 @@ components:
           format: date-time
           example: '2019-10-31T10:00:00Z'
     AvailabilityCalendarItem:
-      title: CalendarItem
       type: object
       properties:
         localDate:
