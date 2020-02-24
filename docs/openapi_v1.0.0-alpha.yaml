@@ -1324,6 +1324,7 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: Bearer {apiKey}
 
 security:
   - bearerAuth: []
